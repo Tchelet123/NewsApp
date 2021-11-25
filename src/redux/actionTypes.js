@@ -1,0 +1,6 @@
+export const FETCH_POSTS = 'FETCH_POSTS';
+export const CHANGE_CATEGORY = 'CHANGE_CATEGORY';
+export const REMOVE_POST_FAVORITE = 'REMOVE_POST_FAVORITE';
+export const ADD_POST_FAVORITE = 'ADD_POST_FAVORITE';
+export const SIGNIN = 'SIGNIN';
+export const SIGNOUT = 'SIGNOUT';
