@@ -66,9 +66,7 @@ const PostsList = ({route}) => {
         <TouchableWithoutFeedback onPress={() => navigateWithProps(post)}>
           <View style={styles.rowPost}>
             <Image source={{uri: postImage}} style={styles.postPic} />
-            <View>
-              <Text numberOfLines={5} style={styles.postContentText}>{postHeader}</Text>
-            </View>
+            <Text numberOfLines={5} style={styles.postContentText}>{postHeader}</Text>
           </View>
         </TouchableWithoutFeedback>
         {(userInfo&&favorite!==true)?(
@@ -148,10 +146,12 @@ const styles = StyleSheet.create({
     maxWidth: '100%',
   },
   postContentText: {
+    flex:1,
     textAlign: 'left',
     color: 'black',
-    fontSize: 20,
+    fontSize: 18,
     padding: 5,
+    flexWrap:'wrap',
   },
   underLine: {
     borderBottomWidth: 1,

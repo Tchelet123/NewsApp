@@ -7,8 +7,10 @@ const initialState = {
 const postsReducer = (state = initialState, action) => {
   switch (action.type) {
     case FETCH_POSTS:
-      
-      if(action.payload.pagination.offset===0){
+      // console.log("actin",action);
+      // return state;
+
+      if (action.payload.pagination.offset === 0) {
         return {
           ...state,
           postsList: action.payload.data,

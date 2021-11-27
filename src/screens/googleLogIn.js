@@ -25,13 +25,13 @@ const GoogleSignIn = () => {
       setUser({userInfo});
     } catch (error) {
       if (error.code === statusCodes.SIGN_IN_CANCELLED) {
-        console.log(' user cancelled the login flow');
+        console.log(' user cancelled the login flow',error);
       } else if (error.code === statusCodes.IN_PROGRESS) {
-        console.log(' operation (e.g. sign in) is in progress already');
+        console.log(' operation (e.g. sign in) is in progress already',error);
       } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
-        console.log(' play services not available or outdated');
+        console.log(' play services not available or outdated',error);
       } else {
-        console.log(' some other error happened');
+        console.log(' some other error happened',error);
       }
     }
   };
@@ -40,7 +40,11 @@ const GoogleSignIn = () => {
     setIsSigninInProgress(!isSignedIn);
   };
   const onStart = () => {
-    GoogleSignin.configure();
+    GoogleSignin.configure(
+      {
+        webClientId:"711645893358-sm1btgs3u54o685ale6jo1pfisc3ot5v.apps.googleusercontent.com"
+      }
+    );
   };
 
   const revokeAccess = async () => {
@@ -57,7 +61,6 @@ const GoogleSignIn = () => {
   };
   useEffect(() => {
     onStart();
-    // isSignedIn();
   }, []);
   return (
     <View style={{flex: 1, margin: 50}}>

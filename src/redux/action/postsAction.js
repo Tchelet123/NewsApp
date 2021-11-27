@@ -1,4 +1,4 @@
-import * as api from '../api/index.js';
+import {fetchPostsByCategory} from '../api/index.js';
 import {
   FETCH_POSTS,
   CHANGE_CATEGORY,
@@ -8,10 +8,16 @@ import {
 } from '../actionTypes.js';
 
 export const getPosts = (category, offset) => async dispatch => {
+  console.log('start adding articles');
   try {
-    console.log('start adding articles');
-    const {data} = await api.fetchPostsByCategory(category, offset);
-    await dispatch({type: FETCH_POSTS, payload: data});
+    fetchPostsByCategory(category, offset)
+      .then(res => res.json())
+      .then(resJson => {
+        
+        dispatch({type: FETCH_POSTS, payload: resJson});
+      })
+    // const {data} = await api.fetchPostsByCategory(category, offset);
+    // console.log(data[0]);
   } catch (error) {
     console.error(error);
   }
