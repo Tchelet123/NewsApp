@@ -4,7 +4,8 @@ import {
   GoogleSigninButton,
   statusCodes,
 } from '@react-native-google-signin/google-signin';
-import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
+import auth from '@react-native-firebase/auth';
+import {View, Text, StyleSheet, TouchableOpacity, Alert} from 'react-native';
 import {signUserIn, signUserOut} from '../redux/action/userAction';
 import {useDispatch} from 'react-redux';
 import {useSelector} from 'react-redux';
@@ -18,11 +19,18 @@ const GoogleSignIn = () => {
     console.log('press');
     try {
       await GoogleSignin.hasPlayServices();
-      const userInfo = await GoogleSignin.signIn();
-      console.log('userInfo', userInfo);
-      dispatch(signUserIn(userInfo));
-
-      setUser({userInfo});
+      const userInfoServer = await GoogleSignin.signIn();
+      if (userInfoServer) {
+        const {accessToken,idToken} = userInfoServer
+        const credential = auth.GoogleAuthProvider.credential(
+          idToken,
+          accessToken,
+        );
+      await auth().signInWithCredential(credential);
+      }
+      dispatch(signUserIn(userInfoServer));
+      console.log('userInfo', userInfoServer);
+      setUser({userInfoServer});
     } catch (error) {
       if (error.code === statusCodes.SIGN_IN_CANCELLED) {
         console.log(' user cancelled the login flow',error);
@@ -31,18 +39,19 @@ const GoogleSignIn = () => {
       } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
         console.log(' play services not available or outdated',error);
       } else {
+        Alert.alert(error.message.toString())
         console.log(' some other error happened',error);
       }
     }
   };
-  const isSignedIn = async () => {
-    const isSignedIn = await GoogleSignin.isSignedIn();
-    setIsSigninInProgress(!isSignedIn);
-  };
+  // const isSignedIn = async () => {
+  //   const isSignedIn = await GoogleSignin.isSignedIn();
+  //   setIsSigninInProgress(!isSignedIn);
+  // };
   const onStart = () => {
     GoogleSignin.configure(
       {
-        webClientId:"711645893358-sm1btgs3u54o685ale6jo1pfisc3ot5v.apps.googleusercontent.com"
+        webClientId:"711645893358-pn1alree37qioce0v3p69f3jf2uul532.apps.googleusercontent.com"
       }
     );
   };
@@ -52,9 +61,6 @@ const GoogleSignIn = () => {
       await GoogleSignin.revokeAccess();
       setUser(null);
       dispatch(signUserOut());
-
-      // Google Account disconnected from your app.
-      // Perform clean-up actions, such as deleting data associated with the disconnected account.
     } catch (error) {
       console.error(error);
     }
@@ -95,4 +101,5 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  
 });
