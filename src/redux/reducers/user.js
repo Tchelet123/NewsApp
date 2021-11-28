@@ -4,14 +4,15 @@ import {
   SIGNIN,SIGNOUT
 } from '../actionTypes.js';
 const initialState = {
-  userInfo: undefined,
-  // userInfo: {userName:'tchelet'},
+  // userInfo: undefined,
+  userInfo: {user:{givenName:'tchelet',familyName:'azaria'}},
 
   userFavoritePosts: [],
 };
 const userReducer = (state = initialState, action) => {
   switch (action.type) {
     case SIGNIN:
+
       return {...state,userInfo:action.payload};
     case SIGNOUT:
       return {userInfo: undefined, userFavoritePosts: []}

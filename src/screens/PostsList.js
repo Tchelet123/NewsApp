@@ -102,6 +102,7 @@ const PostsList = ({route}) => {
       <Title>{title}</Title>
         <FlatList
           data={(favorite!==true)?(postsList):(userFavoritePosts)}
+          ListEmptyComponent={<Text style={styles.textInfo}>This list is empty</Text>}
           contentContainerStyle={{
             margin: 10,
             paddingBottom: 70,
@@ -110,7 +111,7 @@ const PostsList = ({route}) => {
           initialNumToRender={10}
           renderItem={({item}) => (item ? <Item post={item} /> : null)}
           onEndReached={(favorite!==true)?(()=>{getNewPosts(postsList.length)}):(null)}
-          ListFooterComponent={ <Text>The End</Text> }
+          ListFooterComponent={ <Text style={styles.textInfo}>The End</Text> }
           refreshControl={
             <RefreshControl refreshing={refreshing} onRefresh={()=>{onRefresh}} />
           }
@@ -177,6 +178,14 @@ const styles = StyleSheet.create({
       borderRadius: 15,
       justifyContent: 'center',
       alignItems: 'center',
+    },
+    textInfo:{
+      textAlign:'center',
+      color:'black',
+      fontSize: 30,
+      padding: 3,
+      fontWeight: '600',
+  
     },
   
 });

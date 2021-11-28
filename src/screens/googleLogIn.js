@@ -5,12 +5,13 @@ import {
   statusCodes,
 } from '@react-native-google-signin/google-signin';
 import auth from '@react-native-firebase/auth';
-import {View, Text, StyleSheet, TouchableOpacity, Alert} from 'react-native';
+import {View, Text, StyleSheet, TouchableOpacity,useColorScheme, Alert} from 'react-native';
 import {signUserIn, signUserOut} from '../redux/action/userAction';
 import {useDispatch} from 'react-redux';
 import {useSelector} from 'react-redux';
 
 const GoogleSignIn = () => {
+
   const dispatch = useDispatch();
   const userInfo = useSelector(state => state['user']['userInfo']);
   const [user, setUser] = useState(null);
@@ -82,12 +83,20 @@ const GoogleSignIn = () => {
           />
         ) : (
           <View>
-          <TouchableOpacity
-            onPress={() => {
-              revokeAccess();
-            }}>
-            <Text>Signout</Text>
-          </TouchableOpacity>
+            <Text style={styles.textInfo}>Hello, {userInfo.user.givenName} {userInfo.user.familyName}</Text>
+            <Text style={styles.textInfo}>To Signout press the bottun bellow </Text>
+            <View style={styles.buttonContainer}>
+        <TouchableOpacity
+        style={styles.button}
+          onPress={() => {
+            revokeAccess();
+          }}>
+          <Text style={styles.buttonText}>Signout</Text>
+        </TouchableOpacity>
+
+          </View>
+          <Text style={styles.textWarning}>NOTE:The list of your favorite article will be deleted</Text>
+
           </View>
         )}
       </View>
@@ -101,5 +110,38 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  
+  buttonContainer: {
+    alignItems: 'center',
+    padding: 5,
+  },
+  buttonText: {
+    color: '#efefef',
+    fontSize: 40,
+    padding: 3,
+    fontWeight: '600',
+  },
+  button: {
+    // width: 20,
+    // height: 25,
+    backgroundColor: 'blue',
+    borderRadius: 15,
+    justifyContent: 'center',
+    alignItems: 'center',
+  }, 
+  textInfo:{
+    textAlign:'center',
+    color:'black',
+    fontSize: 30,
+    padding: 3,
+    fontWeight: '600',
+
+  },
+  textWarning:{
+    textAlign:'center',
+    color:'red',
+    fontSize: 20,
+    padding: 3,
+    fontWeight: '900',
+
+  }
 });
