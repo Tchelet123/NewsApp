@@ -4,8 +4,8 @@ import {
   SIGNIN,SIGNOUT
 } from '../actionTypes.js';
 const initialState = {
-  // userInfo: undefined,
-  userInfo: {user:{givenName:'tchelet',familyName:'azaria'}},
+  userInfo: undefined,
+  // userInfo: {user:{givenName:'tchelet',familyName:'azaria'}},
 
   userFavoritePosts: [],
 };

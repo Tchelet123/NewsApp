@@ -78,7 +78,7 @@ const GoogleSignIn = () => {
             onPress={() => signIn()}
             size={GoogleSigninButton.Size.Wide}
             color={GoogleSigninButton.Color.Dark}
-            style={{width: 192, height: 48}}
+            style={{width: 200, height: 48}}
             disabled={isSigninInProgress}
           />
         ) : (
